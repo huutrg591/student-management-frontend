@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Thêm Sinh Viên Mới</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<div class="container">
+    <div style="text-align: center;">
+        <h2>Thêm Hồ Sơ Sinh Viên Ký Túc Xá</h2>
+    </div>
+
+    <form id="add-student-form">
+        <div class="form-group">
+            <label>Mã Sinh Viên:</label>
+            <input type="text" id="msv" placeholder="VD: SV004" required>
+        </div>
+
+        <div class="form-group">
+            <label>Họ và Tên:</label>
+            <input type="text" id="hoTen" placeholder="Nhập đầy đủ họ tên" required>
+        </div>
+
+        <div class="form-group">
+            <label>Ngày sinh:</label>
+            <input type="date" id="ngaySinh" required>
+        </div>
+
+        <div class="form-group">
+            <label>Giới tính:</label>
+            <select id="gioiTinh">
+                <option value="Nam">Nam</option>
+                <option value="Nữ">Nữ</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Số điện thoại:</label>
+            <input type="text" id="sdt" placeholder="Nhập SĐT liên hệ" required>
+        </div>
+
+        <div class="form-group">
+            <label>Quê quán:</label>
+            <input type="text" id="queQuan" placeholder="VD: Hà Nội, Bắc Ninh..." required>
+        </div>
+
+        <div class="action-buttons">
+            <button type="submit" class="btn btn-primary">Lưu Sinh Viên</button>
+            <a href="../index.html" class="btn btn-secondary">Quay lại danh sách</a>
+        </div>
+    </form>
+</div>
+
+<script src="../js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Cổng Thông Tin Sinh Viên KTX</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="../js/auth.js"></script> </head>
+<body>
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <h2 class="logo">👤 CỔNG SINH VIÊN</h2>
+            <ul class="menu-list">
+                <li class="active">Phòng của tôi</li>
+                <li>Hóa đơn của tôi</li>
+                <li>Yêu cầu sửa chữa</li>
+            </ul>
+        </aside>
+
+        <main class="main-content">
+            <header class="top-header">
+                <h2>Xin chào, <span id="student-name" style="color: #3498db;">Sinh viên</span></h2>
+                <button class="btn btn-danger" onclick="logout()">Đăng xuất</button>
+            </header>
+
+            <div class="details-section">
+                <h3 style="color: #27ae60; margin-bottom: 15px;">✓ THÔNG TIN PHÒNG ĐANG Ở (P101-T1)</h3>
+                <p><b>Loại phòng:</b> 4 người | <b>Giá thuê:</b> 1.500.000đ/tháng</p>
+                <p><b>Tiền điện nước tháng này:</b> Chưa có hóa đơn mới.</p>
+            </div>
+
+            <div class="details-section" style="margin-top: 20px;">
+                <h3 style="color: #3498db; margin-bottom: 15px;">🔍 DANH SÁCH PHÒNG CÒN TRỐNG (Để đăng ký đổi phòng)</h3>
+                <div class="grid-container" id="empty-rooms">
+                    <div class="room-card">
+                        <h3>Phòng 102 - Tòa Nam</h3>
+                        <p>Sức chứa: 2/6 người</p>
+                        <p><span class="badge-empty">Còn 4 chỗ</span></p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        function logout() {
+            localStorage.removeItem('user');
+            window.location.href = '../login.html';
+        }
+
+        const user = JSON.parse(localStorage.getItem('user'));
+        if(user) {
+            document.getElementById('student-name').innerText = user.username;
+        }
+    </script>
+</body>
+</html>

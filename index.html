@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard - Quản lý Ký Túc Xá</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+</head>
+<body>
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <h2 class="logo">🏠 KTX ADMIN</h2>
+            <ul id="building-list" class="menu-list">
+                </ul>
+        </aside>
+
+        <main class="main-content">
+            <header class="top-header">
+                <h2 id="current-view-title">Vui lòng chọn Tòa nhà</h2>
+                <div>
+                    <button class="btn btn-primary" onclick="exportToExcel()">📥 Xuất Excel</button>
+                    <button class="btn btn-danger" onclick="logout()" style="margin-left: 10px;">Đăng xuất</button>
+                </div>
+            </header>
+
+            <div id="room-grid" class="grid-container">
+            </div>
+
+            <div id="room-details" class="details-section" style="display: none;">
+                <div class="tabs">
+                    <button class="tab-btn active" onclick="switchTab('students')">👥 Sinh viên trong phòng</button>
+                    <button class="tab-btn" onclick="switchTab('invoices')">🧾 Hóa đơn điện nước</button>
+                    <button class="btn btn-danger" style="float: right;" onclick="closeRoomDetails()">Đóng ✖</button>
+                </div>
+
+                <div id="tab-students" class="tab-content">
+                    <button class="btn btn-success" style="margin-bottom: 10px;">+ Xếp sinh viên vào phòng</button>
+                    <table id="table-export">
+                        <thead>
+                            <tr>
+                                <th>MSV</th>
+                                <th>Họ Tên</th>
+                                <th>SĐT</th>
+                                <th>Quê Quán</th>
+                            </tr>
+                        </thead>
+                        <tbody id="room-students-body"></tbody>
+                    </table>
+                </div>
+
+                <div id="tab-invoices" class="tab-content" style="display: none;">
+                    <button class="btn btn-success" style="margin-bottom: 10px;">+ Lập hóa đơn tháng này</button>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Tháng</th>
+                                <th>Số điện</th>
+                                <th>Số nước</th>
+                                <th>Tổng tiền</th>
+                                <th>Trạng thái</th>
+                            </tr>
+                        </thead>
+                        <tbody id="room-invoices-body"></tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/main.js"></script>
+
+    <script>
+        const currentUser = JSON.parse(localStorage.getItem('user'));
+        
+        if (!currentUser || currentUser.role !== 'ADMIN') {
+            alert("Bạn không có quyền truy cập trang này!");
+            window.location.href = 'login.html';
+        }
+
+        // Xử lý nút Đăng xuất
+        function logout() {
+            localStorage.removeItem('user');
+            window.location.href = 'login.html';
+        }
+    </script>
+</body>
+</html>
