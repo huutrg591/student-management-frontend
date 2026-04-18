@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KTX Admin Dashboard</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="sidebar-brand">
+                <i class="fa-solid fa-building-columns"></i>
+                <h2>KTX Admin</h2>
+            </div>
+            <ul class="sidebar-nav">
+                <li onclick="showSection('building-section')">
+                    <i class="fa-solid fa-hotel"></i> <span>Quản lý Tòa nhà</span>
+                </li>
+                <li class="active" onclick="showSection('list-section')">
+                    <i class="fa-solid fa-users"></i> <span>Quản lý Sinh viên</span>
+                </li>
+            </ul>
+            <ul class="sidebar-nav logout-menu">
+                <li onclick="logout()">
+                    <i class="fa-solid fa-arrow-right-from-bracket"></i> <span>Đăng xuất</span>
+                </li>
+            </ul>
+        </aside>
+
+        <div class="main-wrapper">
+            <header class="topbar">
+                <div class="topbar-left">
+                    <div class="search-box">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="text" id="search-input" placeholder="Tìm kiếm sinh viên..." onkeyup="searchStudent()">
+                    </div>
+                </div>
+                <div class="topbar-right">
+                    <div class="user-profile">
+                        <img src="https://ui-avatars.com/api/?name=Admin&background=ebf4ff&color=3b82f6" alt="Admin">
+                        <span>Admin</span>
+                    </div>
+                </div>
+            </header>
+
+            <main class="content">
+                <div class="dashboard-stats">
+                    <div class="stat-card">
+                        <div class="stat-info">
+                            <h3>Tổng sinh viên</h3>
+                            <p id="total-students">0</p>
+                        </div>
+                        <div class="stat-icon"><i class="fa-solid fa-user-graduate"></i></div>
+                    </div>
+                </div>
+
+                <div id="building-section" class="content-section" style="display: none;">
+                    <div class="section-header">
+                        <h2>Danh sách Tòa nhà Ký túc xá</h2>
+                    </div>
+                    
+                    <div class="zone-container">
+                        <h3><i class="fa-solid fa-mars" style="color: #3b82f6;"></i> Khu Nam (Ký túc xá Nam)</h3>
+                        <div class="building-grid">
+                            <div class="building-card">
+                                <img src="images/b1.jpg" alt="Tòa B1">
+                                <div class="building-info">
+                                    <h4>Tòa B1</h4>
+                                    <p><i class="fa-solid fa-layer-group"></i> Số tầng: 4</p>
+                                    <p><i class="fa-solid fa-door-open"></i> Số phòng: 20</p>
+                                    <button class="btn btn-primary" onclick="manageRooms('B1')">Quản lý phòng</button>
+                                </div>
+                            </div>
+                            <div class="building-card">
+                                <img src="images/b2.jpg" alt="Tòa B2">
+                                <div class="building-info">
+                                    <h4>Tòa B2</h4>
+                                    <p><i class="fa-solid fa-layer-group"></i> Số tầng: 5</p>
+                                    <p><i class="fa-solid fa-door-open"></i> Số phòng: 25</p>
+                                    <button class="btn btn-primary" onclick="manageRooms('B2')">Quản lý phòng</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="zone-container">
+                        <h3><i class="fa-solid fa-venus" style="color: #ec4899;"></i> Khu Nữ (Ký túc xá Nữ)</h3>
+                        <div class="building-grid">
+                            <div class="building-card">
+                                <img src="images/b3.jpg" alt="Tòa B3">
+                                <div class="building-info">
+                                    <h4>Tòa B3</h4>
+                                    <p><i class="fa-solid fa-layer-group"></i> Số tầng: 8</p>
+                                    <p><i class="fa-solid fa-door-open"></i> Số phòng: 40</p>
+                                    <button class="btn btn-primary" onclick="manageRooms('B3')">Quản lý phòng</button>
+                                </div>
+                            </div>
+                            <div class="building-card">
+                                <img src="images/b4.jpg" alt="Tòa B4">
+                                <div class="building-info">
+                                    <h4>Tòa B4</h4>
+                                    <p><i class="fa-solid fa-layer-group"></i> Số tầng: 5</p>
+                                    <p><i class="fa-solid fa-door-open"></i> Số phòng: 25</p>
+                                    <button class="btn btn-primary" onclick="manageRooms('B4')">Quản lý phòng</button>
+                                </div>
+                            </div>
+                            <div class="building-card">
+                                <img src="images/b5.jpg" alt="Tòa B5">
+                                <div class="building-info">
+                                    <h4>Tòa B5</h4>
+                                    <p><i class="fa-solid fa-layer-group"></i> Số tầng: 4</p>
+                                    <p><i class="fa-solid fa-door-open"></i> Số phòng: 20</p>
+                                    <button class="btn btn-primary" onclick="manageRooms('B5')">Quản lý phòng</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="room-section" class="content-section" style="display: none;">
+    
+    <div class="dashboard-stats" style="margin-bottom: 20px;">
+        <div class="stat-card" style="width: 300px;">
+            <div class="stat-info">
+                <h3>Tổng sinh viên tòa <span id="stat-building-name" style="color: var(--primary-color);">...</span></h3>
+                <p id="total-students-building" style="font-size: 2rem; color: #3b82f6; font-weight: bold;">0</p>
+            </div>
+            <div class="stat-icon" style="background-color: #e0f2fe; color: #0284c7;"><i class="fa-solid fa-user-graduate"></i></div>
+        </div>
+    </div>
+
+    <div class="section-header">
+        <h2>Danh sách phòng - Tòa <span id="current-building-name" style="color: var(--primary-color);">...</span></h2>
+        <div>
+            <button class="btn btn-secondary" onclick="showSection('building-section')" style="margin-right: 10px;">
+                <i class="fa-solid fa-arrow-left"></i> Quay lại
+            </button>
+            <button class="btn btn-primary">
+                <i class="fa-solid fa-plus"></i> Thêm Phòng
+            </button>
+        </div>
+    </div>
+
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>MÃ PHÒNG</th>
+                    <th>LOẠI PHÒNG</th>
+                    <th>SỨC CHỨA</th>
+                    <th>ĐANG Ở</th>
+                    <th>TRẠNG THÁI</th>
+                    <th>THAO TÁC</th>
+                </tr>
+            </thead>
+            <tbody id="room-table-body">
+                </tbody>
+        </table>
+    </div>
+</div>
+
+                <div id="list-section" class="content-section">
+                    <div class="section-header">
+                        <h2>Danh Sách Sinh Viên</h2>
+                        <div style="display: flex; gap: 15px;">
+                            <select id="filter-toa" class="btn btn-secondary" onchange="fetchStudents()" style="background: white; border: 1px solid var(--border-color); outline: none;">
+                                <option value="">-- Tất cả tòa nhà --</option>
+                                <option value="B1">Tòa B1 (Nam)</option>
+                                <option value="B2">Tòa B2 (Nam)</option>
+                                <option value="B3">Tòa B3 (Nữ)</option>
+                                <option value="B4">Tòa B4 (Nữ)</option>
+                                <option value="B5">Tòa B5 (Nữ)</option>
+                            </select>
+                            <button class="btn btn-primary" onclick="showAddForm()">
+                                <i class="fa-solid fa-plus"></i> Thêm Mới
+                            </button>
+                        </div>
+                    </div>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>MSV</th>
+                                    <th>Họ Tên</th>
+                                    <th>Tòa</th>
+                                    <th>Phòng</th>
+                                    <th>Giới Tính</th>
+                                    <th>SĐT</th>
+                                    <th>Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody id="student-table-body">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="form-section" class="content-section" style="display: none;">
+                    <div class="section-header">
+                        <h2 id="form-title">Thêm Sinh Viên Mới</h2>
+                    </div>
+                    <div class="form-container">
+                        <form id="main-form">
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label>Mã Sinh Viên</label>
+                                    <input type="text" id="msv" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Họ và Tên</label>
+                                    <input type="text" id="hoTen" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Ngày Sinh</label>
+                                    <input type="date" id="ngaySinh" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Giới Tính</label>
+                                    <select id="gioiTinh" required>
+                                        <option value="Nam">Nam</option>
+                                        <option value="Nữ">Nữ</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Số Điện Thoại</label>
+                                    <input type="text" id="sdt" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Quê Quán</label>
+                                    <input type="text" id="queQuan" required>
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary">Lưu dữ liệu</button>
+                                <button type="button" class="btn btn-secondary" onclick="goBack()">Quay lại</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+    <script src="js/main.js"></script>
+</body>
+</html>

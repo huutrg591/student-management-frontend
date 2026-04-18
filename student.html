@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cổng Sinh Viên - KTX PTIT</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="sidebar-brand">
+                <i class="fa-solid fa-graduation-cap"></i>
+                <h2>CỔNG SINH VIÊN</h2>
+            </div>
+            <ul class="sidebar-nav" id="student-nav">
+                <li class="active" onclick="switchTab('my-room-section', this)">
+                    <i class="fa-solid fa-bed"></i> <span>Phòng của tôi</span>
+                </li>
+                <li onclick="switchTab('invoice-section', this)">
+                    <i class="fa-solid fa-file-invoice-dollar"></i> <span>Hóa đơn của tôi</span>
+                </li>
+                <li onclick="switchTab('repair-section', this)">
+                    <i class="fa-solid fa-screwdriver-wrench"></i> <span>Yêu cầu sửa chữa</span>
+                </li>
+            </ul>
+            
+            <ul class="sidebar-nav logout-menu">
+                <li onclick="logout()">
+                    <i class="fa-solid fa-arrow-right-from-bracket"></i> <span>Đăng xuất</span>
+                </li>
+            </ul>
+        </aside>
+
+        <div class="main-wrapper">
+            <header class="topbar">
+                <div class="topbar-left">
+                    <h3 style="color: var(--text-muted); font-weight: 500;">Xin chào, Nguyễn Văn A (B21DCCN123)</h3>
+                </div>
+                <div class="topbar-right">
+                    <div class="user-profile">
+                        <img src="https://ui-avatars.com/api/?name=Sinh+Vien&background=e0e7ff&color=4338ca" alt="Student">
+                        <span>Sinh viên</span>
+                    </div>
+                </div>
+            </header>
+
+            <main class="content">
+                
+                <div id="my-room-section" class="content-section">
+                    <div class="section-header">
+                        <h2>Thông Tin Phòng Hiện Tại</h2>
+                    </div>
+                    
+                    <div class="dashboard-stats" style="display: flex; gap: 20px;">
+                        <div class="stat-card" style="width: 300px;">
+                            <div class="stat-info">
+                                <h3>Phòng - Tòa</h3>
+                                <p>P101 - T1</p>
+                            </div>
+                            <div class="stat-icon" style="background-color: #dcfce7; color: #16a34a;"><i class="fa-solid fa-door-open"></i></div>
+                        </div>
+                        <div class="stat-card" style="width: 300px;">
+                            <div class="stat-info">
+                                <h3>Giá phòng</h3>
+                                <p style="font-size: 1.5rem;">400.000đ/tháng</p>
+                            </div>
+                            <div class="stat-icon" style="background-color: #fef08a; color: #ca8a04;"><i class="fa-solid fa-coins"></i></div>
+                        </div>
+                    </div>
+
+                    <div class="section-header" style="margin-top: 30px;">
+                        <h3><i class="fa-solid fa-users"></i> Danh sách bạn cùng phòng</h3>
+                        <button class="btn btn-primary"><i class="fa-solid fa-right-left"></i> Đăng ký đổi phòng</button>
+                    </div>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>MSV</th>
+                                    <th>Họ Tên</th>
+                                    <th>Số Giường</th>
+                                    <th>Số Điện Thoại</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="background-color: #f8fafc;">
+                                    <td><strong>B21DCCN123</strong></td>
+                                    <td><strong>Nguyễn Văn A (Bạn)</strong></td>
+                                    <td>Giường 1</td>
+                                    <td>0987654321</td>
+                                </tr>
+                                <tr><td>B21DCCN456</td><td>Trần Văn B</td><td>Giường 2</td><td>0912345678</td></tr>
+                                <tr><td colspan="4" style="text-align: center; color: var(--success); font-weight: bold;">TRỐNG (Bạn có thể đăng ký chuyển giường)</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="invoice-section" class="content-section" style="display: none;">
+                    <div class="section-header">
+                        <h2>Tra Cứu Hóa Đơn Điện Nước</h2>
+                    </div>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Kỳ thu (Tháng)</th>
+                                    <th>Số điện (kWh)</th>
+                                    <th>Số nước (Khối)</th>
+                                    <th>Tổng tiền (VNĐ)</th>
+                                    <th>Trạng thái</th>
+                                    <th>Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>03/2026</td>
+                                    <td>120</td>
+                                    <td>15</td>
+                                    <td style="font-weight: bold; color: var(--danger);">550,000đ</td>
+                                    <td><span style="background: #fee2e2; color: #ef4444; padding: 4px 8px; border-radius: 4px; font-size: 0.85rem; font-weight: bold;">Chưa đóng</span></td>
+                                    <td><button class="btn btn-primary" style="padding: 5px 10px; font-size: 0.85rem;">Thanh toán MOMO</button></td>
+                                </tr>
+                                <tr>
+                                    <td>02/2026</td>
+                                    <td>95</td>
+                                    <td>12</td>
+                                    <td style="font-weight: bold;">420,000đ</td>
+                                    <td><span style="background: #dcfce7; color: #16a34a; padding: 4px 8px; border-radius: 4px; font-size: 0.85rem; font-weight: bold;">Đã đóng</span></td>
+                                    <td>-</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="repair-section" class="content-section" style="display: none;">
+                    <div class="section-header">
+                        <h2>Gửi Yêu Cầu Sửa Chữa</h2>
+                    </div>
+                    <div class="form-container" style="max-width: 600px;">
+                        <form onsubmit="submitRepair(event)">
+                            <div class="form-group" style="margin-bottom: 20px;">
+                                <label>Loại hỏng hóc</label>
+                                <select required>
+                                    <option value="">-- Chọn loại sự cố --</option>
+                                    <option value="Dien">Điện (Cháy bóng, hỏng ổ cắm...)</option>
+                                    <option value="Nuoc">Nước (Tắc cống, vòi rỉ...)</option>
+                                    <option value="VatTu">Vật tư (Hỏng giường, tủ, cửa sổ...)</option>
+                                </select>
+                            </div>
+                            <div class="form-group" style="margin-bottom: 20px;">
+                                <label>Mô tả chi tiết tình trạng</label>
+                                <textarea rows="5" required placeholder="Ví dụ: Bóng đèn huỳnh quang ở giữa phòng bị cháy từ tối qua..." style="padding: 12px; border: 1px solid var(--border-color); border-radius: 6px; width: 100%; outline: none; font-family: inherit; resize: vertical;"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary"><i class="fa-solid fa-paper-plane"></i> Gửi Yêu Cầu Ngay</button>
+                        </form>
+                    </div>
+                </div>
+
+            </main>
+        </div>
+    </div>
+    
+    <script src="js/main.js"></script>
+    
+    <script>
+        function switchTab(sectionId, clickedElement) {
+            document.querySelectorAll('.content-section').forEach(sec => sec.style.display = 'none');
+            document.getElementById(sectionId).style.display = 'block';
+            
+            const navItems = document.querySelectorAll('#student-nav li');
+            navItems.forEach(li => li.classList.remove('active'));
+            clickedElement.classList.add('active');
+        }
+
+        function submitRepair(e) {
+            e.preventDefault();
+            alert("✅ Đã gửi yêu cầu sửa chữa thành công! Ban quản lý sẽ cử người xuống kiểm tra sớm nhất.");
+            e.target.reset();
+            switchTab('my-room-section', document.querySelector('#student-nav li:first-child')); // Tự động quay về trang chủ
+        }
+    </script>
+</body>
+</html>
