@@ -2,57 +2,39 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <title>Đăng Nhập Hệ Thống KTX</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng nhập - KTX PTIT</title>
     <link rel="stylesheet" href="css/style.css">
     <style>
-        body { display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #2c3e50; }
-        .login-box { background: white; padding: 40px; border-radius: 10px; width: 400px; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
-        .login-box h2 { color: #3498db; text-align: center; border: none; margin-bottom: 20px; }
+        body { display: flex; align-items: center; justify-content: center; height: 100vh; background-color: var(--bg-color); }
+        .login-box { background: white; padding: 40px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 400px; text-align: center; }
+        .login-box h2 { margin-bottom: 20px; color: var(--primary-color); }
+        .login-box input { width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 6px; }
+        .login-box button { width: 100%; padding: 12px; background: var(--primary-color); color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 16px; font-weight: bold; }
     </style>
 </head>
 <body>
     <div class="login-box">
-        <h2>KÝ TÚC XÁ ADMIN</h2>
+        <h2>ĐĂNG NHẬP</h2>
         <form id="login-form">
-            <div class="form-group">
-                <label>Tài khoản (Tên đăng nhập / MSV):</label>
-                <input type="text" id="username" required>
-            </div>
-            <div class="form-group">
-                <label>Mật khẩu:</label>
-                <input type="password" id="password" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; margin-bottom: 20px;">
-            </div>
-            <button type="submit" class="btn btn-primary" style="width: 100%;">Đăng Nhập</button>
+            <input type="text" id="username" placeholder="Tên đăng nhập (VD: admin)" required>
+            <input type="password" id="password" placeholder="Mật khẩu" required>
+            <button type="submit">Vào Hệ Thống</button>
         </form>
+        <p style="margin-top: 15px;"><a href="index.html" style="color: var(--text-muted); text-decoration: none;">&larr; Quay lại trang chủ</a></p>
     </div>
 
     <script>
         document.getElementById('login-form').addEventListener('submit', function(e) {
             e.preventDefault();
-            const payload = {
-                username: document.getElementById('username').value,
-                password: document.getElementById('password').value
-            };
-
-            fetch('http://localhost:8080/api/auth/login', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
-            })
-            .then(response => {
-                if(response.ok) return response.json();
-                throw new Error("Sai tài khoản/mật khẩu");
-            })
-            .then(data => {
-                localStorage.setItem('user', JSON.stringify(data));
-                
-                if(data.role === 'ADMIN') {
-                    window.location.href = 'index.html';
-                } else if(data.role === 'STUDENT') {
-                    window.location.href = 'pages/student-dashboard.html';
-                }
-            })
-            .catch(error => alert(error.message));
+            const username = document.getElementById('username').value.toLowerCase();
+            
+            // Xử lý chuyển hướng tạm thời ở FE (Nếu có BE thì thay bằng Fetch API)
+            if (username === 'admin') {
+                window.location.href = 'admin.html';
+            } else {
+                window.location.href = 'pages/student-dashboard.html';
+            }
         });
     </script>
 </body>
