@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>KTX Admin Dashboard</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -16,15 +19,22 @@
             </div>
             <ul class="sidebar-nav">
                 <li onclick="showSection('building-section')">
-                    <i class="fa-solid fa-hotel"></i> <span>Quản lý Tòa nhà</span>
+                    <i class="fa-solid fa-hotel"></i>
+                    <span>Quản lý tòa nhà</span>
                 </li>
                 <li class="active" onclick="showSection('list-section')">
-                    <i class="fa-solid fa-users"></i> <span>Quản lý Sinh viên</span>
+                    <i class="fa-solid fa-users"></i>
+                    <span>Quản lý sinh viên</span>
+                </li>
+                <li onclick="showSection('repair-admin-section')">
+                    <i class="fa-solid fa-screwdriver-wrench"></i>
+                    <span>Yêu cầu sửa chữa</span>
                 </li>
             </ul>
             <ul class="sidebar-nav logout-menu">
                 <li onclick="logout()">
-                    <i class="fa-solid fa-arrow-right-from-bracket"></i> <span>Đăng xuất</span>
+                    <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                    <span>Đăng xuất</span>
                 </li>
             </ul>
         </aside>
@@ -46,7 +56,7 @@
             </header>
 
             <main class="content">
-                <div class="dashboard-stats">
+                <div class="dashboard-stats" style="display: flex; gap: 20px; flex-wrap: wrap;">
                     <div class="stat-card">
                         <div class="stat-info">
                             <h3>Tổng sinh viên</h3>
@@ -54,15 +64,36 @@
                         </div>
                         <div class="stat-icon"><i class="fa-solid fa-user-graduate"></i></div>
                     </div>
+                    <div class="stat-card">
+                        <div class="stat-info">
+                            <h3>Chờ tiếp nhận</h3>
+                            <p id="repair-pending-count">0</p>
+                        </div>
+                        <div class="stat-icon"><i class="fa-solid fa-inbox"></i></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-info">
+                            <h3>Đang xử lý</h3>
+                            <p id="repair-progress-count">0</p>
+                        </div>
+                        <div class="stat-icon"><i class="fa-solid fa-spinner"></i></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-info">
+                            <h3>Đã hoàn thành</h3>
+                            <p id="repair-completed-count">0</p>
+                        </div>
+                        <div class="stat-icon"><i class="fa-solid fa-circle-check"></i></div>
+                    </div>
                 </div>
 
                 <div id="building-section" class="content-section" style="display: none;">
                     <div class="section-header">
-                        <h2>Danh sách Tòa nhà Ký túc xá</h2>
+                        <h2>Danh sách tòa nhà ký túc xá</h2>
                     </div>
-                    
+
                     <div class="zone-container">
-                        <h3><i class="fa-solid fa-mars" style="color: #3b82f6;"></i> Khu Nam (Ký túc xá Nam)</h3>
+                        <h3><i class="fa-solid fa-mars" style="color: #3b82f6;"></i> Khu Nam</h3>
                         <div class="building-grid">
                             <div class="building-card">
                                 <img src="images/b1.jpg" alt="Tòa B1">
@@ -86,7 +117,7 @@
                     </div>
 
                     <div class="zone-container">
-                        <h3><i class="fa-solid fa-venus" style="color: #ec4899;"></i> Khu Nữ (Ký túc xá Nữ)</h3>
+                        <h3><i class="fa-solid fa-venus" style="color: #ec4899;"></i> Khu Nữ</h3>
                         <div class="building-grid">
                             <div class="building-card">
                                 <img src="images/b3.jpg" alt="Tòa B3">
@@ -120,51 +151,46 @@
                 </div>
 
                 <div id="room-section" class="content-section" style="display: none;">
-    
-    <div class="dashboard-stats" style="margin-bottom: 20px;">
-        <div class="stat-card" style="width: 300px;">
-            <div class="stat-info">
-                <h3>Tổng sinh viên tòa <span id="stat-building-name" style="color: var(--primary-color);">...</span></h3>
-                <p id="total-students-building" style="font-size: 2rem; color: #3b82f6; font-weight: bold;">0</p>
-            </div>
-            <div class="stat-icon" style="background-color: #e0f2fe; color: #0284c7;"><i class="fa-solid fa-user-graduate"></i></div>
-        </div>
-    </div>
+                    <div class="dashboard-stats" style="margin-bottom: 20px;">
+                        <div class="stat-card" style="width: 300px;">
+                            <div class="stat-info">
+                                <h3>Tổng sinh viên tòa <span id="stat-building-name" style="color: var(--primary-color);">...</span></h3>
+                                <p id="total-students-building" style="font-size: 2rem; color: #3b82f6; font-weight: bold;">0</p>
+                            </div>
+                            <div class="stat-icon" style="background-color: #e0f2fe; color: #0284c7;"><i class="fa-solid fa-user-graduate"></i></div>
+                        </div>
+                    </div>
 
-    <div class="section-header">
-        <h2>Danh sách phòng - Tòa <span id="current-building-name" style="color: var(--primary-color);">...</span></h2>
-        <div>
-            <button class="btn btn-secondary" onclick="showSection('building-section')" style="margin-right: 10px;">
-                <i class="fa-solid fa-arrow-left"></i> Quay lại
-            </button>
-            <button class="btn btn-primary">
-                <i class="fa-solid fa-plus"></i> Thêm Phòng
-            </button>
-        </div>
-    </div>
+                    <div class="section-header">
+                        <h2>Danh sách phòng - Tòa <span id="current-building-name" style="color: var(--primary-color);">...</span></h2>
+                        <div>
+                            <button class="btn btn-secondary" onclick="showSection('building-section')" style="margin-right: 10px;">
+                                <i class="fa-solid fa-arrow-left"></i> Quay lại
+                            </button>
+                        </div>
+                    </div>
 
-    <div class="table-container">
-        <table>
-            <thead>
-                <tr>
-                    <th>MÃ PHÒNG</th>
-                    <th>LOẠI PHÒNG</th>
-                    <th>SỨC CHỨA</th>
-                    <th>ĐANG Ở</th>
-                    <th>TRẠNG THÁI</th>
-                    <th>THAO TÁC</th>
-                </tr>
-            </thead>
-            <tbody id="room-table-body">
-                </tbody>
-        </table>
-    </div>
-</div>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Mã phòng</th>
+                                    <th>Loại phòng</th>
+                                    <th>Sức chứa</th>
+                                    <th>Đang ở</th>
+                                    <th>Trạng thái</th>
+                                    <th>Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody id="room-table-body"></tbody>
+                        </table>
+                    </div>
+                </div>
 
                 <div id="list-section" class="content-section">
                     <div class="section-header">
-                        <h2>Danh Sách Sinh Viên</h2>
-                        <div style="display: flex; gap: 15px;">
+                        <h2>Danh sách sinh viên</h2>
+                        <div style="display: flex; gap: 15px; flex-wrap: wrap;">
                             <select id="filter-toa" class="btn btn-secondary" onchange="fetchStudents()" style="background: white; border: 1px solid var(--border-color); outline: none;">
                                 <option value="">-- Tất cả tòa nhà --</option>
                                 <option value="B1">Tòa B1 (Nam)</option>
@@ -174,7 +200,7 @@
                                 <option value="B5">Tòa B5 (Nữ)</option>
                             </select>
                             <button class="btn btn-primary" onclick="showAddForm()">
-                                <i class="fa-solid fa-plus"></i> Thêm Mới
+                                <i class="fa-solid fa-plus"></i> Thêm mới
                             </button>
                         </div>
                     </div>
@@ -183,53 +209,91 @@
                             <thead>
                                 <tr>
                                     <th>MSV</th>
-                                    <th>Họ Tên</th>
+                                    <th>Họ tên</th>
                                     <th>Tòa</th>
                                     <th>Phòng</th>
-                                    <th>Giới Tính</th>
+                                    <th>Giới tính</th>
                                     <th>SĐT</th>
                                     <th>Thao tác</th>
                                 </tr>
                             </thead>
-                            <tbody id="student-table-body">
-                            </tbody>
+                            <tbody id="student-table-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="repair-admin-section" class="content-section" style="display: none;">
+                    <div class="section-header">
+                        <h2>Tiếp nhận yêu cầu sửa chữa</h2>
+                        <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                            <select id="repair-status-filter" class="btn btn-secondary" onchange="loadAdminRepairs()" style="background: white; border: 1px solid var(--border-color); outline: none;">
+                                <option value="">-- Tất cả trạng thái --</option>
+                                <option value="Cho tiep nhan">Chờ tiếp nhận</option>
+                                <option value="Da tiep nhan">Đã tiếp nhận</option>
+                                <option value="Dang xu ly">Đang xử lý</option>
+                                <option value="Da hoan thanh">Đã hoàn thành</option>
+                            </select>
+                            <button class="btn btn-secondary" type="button" onclick="loadAdminRepairs()">
+                                <i class="fa-solid fa-rotate"></i> Làm mới
+                            </button>
+                        </div>
+                    </div>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>MSV</th>
+                                    <th>Phòng</th>
+                                    <th>Hạng mục</th>
+                                    <th>Mô tả</th>
+                                    <th>Thời gian</th>
+                                    <th>Trạng thái</th>
+                                    <th>Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody id="repair-admin-table-body"></tbody>
                         </table>
                     </div>
                 </div>
 
                 <div id="form-section" class="content-section" style="display: none;">
                     <div class="section-header">
-                        <h2 id="form-title">Thêm Sinh Viên Mới</h2>
+                        <h2 id="form-title">Thêm sinh viên mới</h2>
                     </div>
                     <div class="form-container">
                         <form id="main-form">
                             <div class="form-grid">
                                 <div class="form-group">
-                                    <label>Mã Sinh Viên</label>
+                                    <label>Mã sinh viên</label>
                                     <input type="text" id="msv" required>
                                 </div>
                                 <div class="form-group">
-                                    <label>Họ và Tên</label>
+                                    <label>Họ và tên</label>
                                     <input type="text" id="hoTen" required>
                                 </div>
                                 <div class="form-group">
-                                    <label>Ngày Sinh</label>
+                                    <label>Ngày sinh</label>
                                     <input type="date" id="ngaySinh" required>
                                 </div>
                                 <div class="form-group">
-                                    <label>Giới Tính</label>
+                                    <label>Giới tính</label>
                                     <select id="gioiTinh" required>
                                         <option value="Nam">Nam</option>
                                         <option value="Nữ">Nữ</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label>Số Điện Thoại</label>
-                                    <input type="text" id="sdt" required>
+                                    <label>Số điện thoại</label>
+                                    <input type="text" id="sdt" class="form-control" required>
                                 </div>
                                 <div class="form-group">
-                                    <label>Quê Quán</label>
-                                    <input type="text" id="queQuan" required>
+                                    <label>Quê quán</label>
+                                    <input type="text" id="queQuan" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Xếp vào phòng</label>
+                                    <input type="text" id="idPhong" class="form-control" placeholder="Ví dụ: P101-B4" required>
                                 </div>
                             </div>
                             <div class="form-actions">
